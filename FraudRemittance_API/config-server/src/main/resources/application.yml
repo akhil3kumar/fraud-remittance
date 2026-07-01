@@ -2,5 +2,12 @@ spring:
   application:
     name: config-server
 
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/akhil3kumar/Hospital_Management_Api.git
+          search-paths: hospital-config-repo
+          clone-on-start: true
 server:
 	port: 8888

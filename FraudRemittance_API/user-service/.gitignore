@@ -31,3 +31,14 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+# Eclipse workspace metadata
+.metadata/
+**/.metadata/
+
+# Extra caches and logs
+*.log
+*.snap
+*.index
+*.xml.zip
