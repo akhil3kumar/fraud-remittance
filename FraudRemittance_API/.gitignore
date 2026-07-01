@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# IntelliJ IDEA
+*.iml
+**/.idea/
+
+# Eclipse
+**/.metadata/
+
+# Logs and temp files
+*.log
+*.prefs
+*.snap
+*.index
+*.xml.zip
+
+# Build outputs
+target/
+build/
