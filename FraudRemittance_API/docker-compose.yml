@@ -13,9 +13,9 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: hospital_pgadmin
+    container_name: fraud_remittance
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@hospital.com
+      PGADMIN_DEFAULT_EMAIL: admin@financial.com
       PGADMIN_DEFAULT_PASSWORD: admin123
     ports:
       - "5050:80"
