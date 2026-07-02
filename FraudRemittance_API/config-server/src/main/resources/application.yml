@@ -7,8 +7,9 @@ spring:
       server:
         git:
           uri: https://github.com/akhil3kumar/fraud-remittance.git
+          default-label: main
+#          clone-on-start: true
           search-paths: FraudRemittance_API/configuration-repository
-          clone-on-start: true
 
 server:
   port: 8888
