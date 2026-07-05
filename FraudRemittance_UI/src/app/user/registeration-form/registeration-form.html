@@ -1,0 +1,142 @@
+<div class="form-container">
+  <form [formGroup]="registerForm" (ngSubmit)="submitForm()" class="register-form">
+    <h2 class="form-title">Create Account</h2>
+    <div class="name-group">
+      <label>Full Name</label>
+
+      <div class="name-input">
+        <div class="field">
+          <input
+            id="first-name"
+            type="text"
+            placeholder="First Name"
+            formControlName="firstName"
+            autocomplete="given-name"
+          />
+
+          <div class="error">
+            <span *ngIf="(firstName.touched || firstName.dirty) && firstName.errors?.['required']">
+              Field can't be empty
+            </span>
+          </div>
+        </div>
+
+        <div class="field">
+          <input
+            id="last-name"
+            type="text"
+            placeholder="Last Name"
+            formControlName="lastName"
+            autocomplete="family-name"
+          />
+
+          <div class="error">
+            <span *ngIf="(lastName.touched || lastName.dirty) && lastName.errors?.['required']">
+              Field can't be empty
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="email-inputs">
+      <label for="email">Email: </label>
+      <input
+        id="email"
+        type="email"
+        placeholder="email id"
+        formControlName="email"
+        autocomplete="email"
+      />
+      <div class="error">
+        <span *ngIf="(email.touched || email.dirty) && email.errors?.['required']"
+          >Field can't be empty</span
+        >
+        <span *ngIf="(email.touched || email.dirty) && email.errors?.['email']"
+          >Write the valid mail id</span
+        >
+      </div>
+    </div>
+
+    <div class="contact-inputs">
+      <label for="contact">Contact Number: </label>
+      <input
+        id="contact"
+        type="tel"
+        placeholder="contact number"
+        formControlName="phoneNumber"
+        autocomplete="tel"
+      />
+      <div class="error">
+        <span *ngIf="(phoneNumber.touched || phoneNumber.dirty) && phoneNumber.errors?.['required']"
+          >Field can't be empty</span
+        >
+        <span *ngIf="(phoneNumber.touched || phoneNumber.dirty) && phoneNumber.errors?.['pattern']"
+          >Contact number must be 10 digits</span
+        >
+      </div>
+    </div>
+
+    <div class="password-inputs">
+      <label for="password">Password:</label>
+
+      <div class="password-wrapper">
+        <input
+          id="password"
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="Write Password"
+          formControlName="password"
+          autocomplete="new-password"
+        />
+
+        <button type="button" class="toggle-password" (click)="togglePassword()">
+          {{ showPassword ? 'Hide' : 'Show' }}
+        </button>
+      </div>
+    </div>
+    <div class="error" *ngIf="(password.touched || password.dirty) && password.invalid">
+      <span *ngIf="(password.touched || password.dirty) &&  password.errors?.['required']"
+        >Field can't be empty</span
+      >
+      <span *ngIf="(password.touched || password.dirty) && password.errors?.['pattern']">
+        Password must contain letters, numbers and special characters</span
+      >
+    </div>
+
+    <div class="password-inputs">
+      <label for="confirmPassword">Confirm Password:</label>
+
+      <div class="password-wrapper">
+        <input
+          id="confirmPassword"
+          [type]="showConfirmPassword ? 'text' : 'password'"
+          placeholder="Confirm Password"
+          formControlName="confirmPassword"
+          autocomplete="new-password"
+        />
+
+        <button type="button" class="toggle-password" (click)="toggleConfirmPassword()">
+          {{ showConfirmPassword ? 'Hide' : 'Show' }}
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="error"
+      *ngIf="registerForm.errors?.['passwordMismatch'] &&
+              (confirmPassword.touched || confirmPassword.dirty)"
+    >
+      Passwords do not match
+    </div>
+
+    <div class="form-button">
+      <button type="submit" [disabled]="registerForm.invalid">Submit</button>
+      <button type="reset">Reset</button>
+    </div>
+
+    <span
+      >Already have a account?
+      <a class="forgot-password" routerLink="/auth/login"> Sign in. </a>
+    </span>
+  </form>
+</div>

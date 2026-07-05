@@ -30,12 +30,15 @@ public class JwtUtil {
 
     public String generateAccessToken(Users user) {
 
+        Date now = new Date();
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString())
                 .setSubject(user.getEmail())
                 .setClaims(getAccessClaims(user))
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() +expirationTime))
+                .setIssuedAt(now)
+                .setExpiration(
+                        new Date(now.getTime() + expirationTime)
+                )
                 .signWith(getSignInKey(),SignatureAlgorithm.HS256)
                 .compact();
 
@@ -57,12 +60,15 @@ public class JwtUtil {
     public String generateRefreshToken(Users user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("tokenType", "REFRESH");
+        claims.put("userId", user.getId());
+
+        Date now = new Date();
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString())
                 .setSubject(user.getEmail())
                 .setClaims(claims)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() +refreshExpirationTime))
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + expirationTime))
                 .signWith(getSignInKey(),SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -109,5 +115,27 @@ public class JwtUtil {
     public LocalDateTime getRefreshExpirationTime() {
         return LocalDateTime.now()
                 .plusSeconds(refreshExpirationTime / 1000);
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            return !isTokenExpired(token);
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    public boolean isAccessToken(String token) {
+        return "ACCESS".equals(
+                extractAllClaims(token)
+                        .get("tokenType", String.class)
+        );
+    }
+
+    public boolean isRefreshToken(String token) {
+        return "REFRESH".equals(
+                extractAllClaims(token)
+                        .get("tokenType", String.class)
+        );
     }
 }

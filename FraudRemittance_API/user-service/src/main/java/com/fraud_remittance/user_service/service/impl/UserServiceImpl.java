@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void validateUserByPhoneNumber(String phoneNumber) {
-        if(userRepositroy.existsByPhoneNumber(phoneNumber)){
+        if(userRepositroy.existsByContactNumber(phoneNumber)){
             throw new ResourceAlreadyExistExeption("User with phone number already exists");
         }
     }

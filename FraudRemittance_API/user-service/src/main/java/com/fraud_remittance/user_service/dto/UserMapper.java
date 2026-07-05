@@ -16,7 +16,7 @@ public class UserMapper {
                 .email(request.email())
                 .contactNumber(request.phoneNumber())
                 .password(password)
-                .role(UserRole.FRAUD_ANALYST)
+                .role(UserRole.ADMIN)
                 .status(UserStatus.ACTIVE)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())

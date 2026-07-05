@@ -10,6 +10,7 @@ import com.fraud_remittance.user_service.repository.RefreshTokenRepository;
 import exception.BadCredentialsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -22,10 +23,11 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     private final JwtUtil jwtUtil;
     private final RefreshTokenRepository refreshTokenRepository;
 
+    @Transactional
     @Override
     public void saveToken(Users user, String refreshToken) {
         RefreshToken refreshTokenObj = new RefreshToken();
-        refreshTokenObj.setToken(refreshToken);
+        refreshTokenObj.setRefreshToken(refreshToken);
         refreshTokenObj.setUser(user);
 
         Date expiryDate = jwtUtil.extractAllClaims(refreshToken)
@@ -33,25 +35,47 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
         refreshTokenObj.setExpiryDate(
                 expiryDate.toInstant()
-                        .atZone(ZoneId.systemDefault())
+                        .atZone(ZoneId.of("UTC"))
                         .toLocalDateTime()
         );
+
+        refreshTokenRepository.save(refreshTokenObj);
     }
 
+    @Transactional
     @Override
     public RefreshTokenResponse refreshToken(RefreshTokenRequest request) {
-        RefreshToken refreshToken = refreshTokenRepository
+
+        if (!jwtUtil.validateToken(request.refreshToken())) {
+            throw new BadCredentialsException("Invalid refresh token");
+        }
+
+        RefreshToken refreshTokenUser = refreshTokenRepository
                 .findByRefreshToken(request.refreshToken())
                 .orElseThrow(() -> new BadCredentialsException("Invalid refresh token"));
 
-        if (refreshToken.getExpiryDate()
+        String email = jwtUtil.extractUsername(request.refreshToken());
+        if (!email.equals(refreshTokenUser.getUser().getEmail())) {
+            throw new BadCredentialsException("Token mismatch");
+        }
+        if (refreshTokenUser.getExpiryDate()
                 .isBefore(LocalDateTime.now())) {
+            refreshTokenRepository.delete(refreshTokenUser);
             throw new BadCredentialsException("Refresh token expired");
         }
+        Users user = refreshTokenUser.getUser();
 
-        String accessToken = jwtUtil.generateAccessToken(refreshToken.getUser());
+        String accessToken = jwtUtil.generateAccessToken(user);
+
+        String newRefreshToken = jwtUtil.generateRefreshToken(user);
+
+        deleteRefreshToken(user);
+
+        saveToken(user, newRefreshToken);
+
         return new RefreshTokenResponse(
                 accessToken,
+                newRefreshToken,
                 "Bearer"
         );
     }
@@ -60,6 +84,8 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     public void deleteRefreshToken(Users user) {
         refreshTokenRepository.deleteByUser(user);
     }
+
+
 
 }
 
