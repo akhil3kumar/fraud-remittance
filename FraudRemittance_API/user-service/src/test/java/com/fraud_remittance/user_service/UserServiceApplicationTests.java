@@ -1,4 +1,4 @@
-package com.fraud_remittance.config_server;
+package com.fraud_remittance.user_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

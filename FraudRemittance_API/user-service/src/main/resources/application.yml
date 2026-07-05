@@ -6,3 +6,8 @@ spring:
 
   profiles:
     active: dev
+
+security:
+  jwt:
+    expiration-time: 900000
+    refresh-expiration-time: 604800000

@@ -1,0 +1,7 @@
+package com.fraud_remittance.user_service.entity;
+
+public enum UserStatus {
+    ACTIVE,
+    INACTIVE,
+    LOCKED
+}
