@@ -32,6 +32,13 @@
             <version>11.0.22</version>
             <scope>compile</scope>
         </dependency>
+        <!-- Source: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+            <version>3.5.16</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 </project>
