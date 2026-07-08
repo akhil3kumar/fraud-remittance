@@ -38,5 +38,5 @@ server:
 
 batch:
   customer:
-    file-path: /Users/akhil/Downloads/archive/Data/Customer Profiles/customer_data.csv
+    file-path: file:/Users/akhil/Downloads/archive/Data/Customer Profiles/customer_data.csv
 

@@ -28,6 +28,7 @@ public class CustomerReader {
 
     @Bean
     public FlatFileItemReader<Customer> customerItemReader() throws FileNotFoundException {
+        System.out.println("PATH = " + inputPath);
         FlatFileItemReader<Customer> reader = new FlatFileItemReader<>();
         reader.setResource(inputPath);
         reader.setLinesToSkip(1);
