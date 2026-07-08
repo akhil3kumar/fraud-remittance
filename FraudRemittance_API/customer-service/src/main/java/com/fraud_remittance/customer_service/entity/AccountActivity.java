@@ -23,4 +23,5 @@ public class AccountActivity {
     private Double accountBalance;
 
     private LocalDateTime lastLogin;
+
 }

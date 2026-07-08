@@ -12,7 +12,6 @@ import lombok.*;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
 
     private String name;
@@ -20,5 +19,8 @@ public class Customer {
     private Integer age;
 
     private String address;
+
+    @OneToOne(mappedBy = "customer")
+    private AccountActivity accountActivity;
 
 }

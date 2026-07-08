@@ -1,47 +1,36 @@
-package com.fraud_remittance.customer_service.batch;
+package com.fraud_remittance.customer_service.batch.accountActivity;
 
-import com.fraud_remittance.customer_service.entity.Customer;
-import org.springframework.batch.item.ItemReader;
-import org.springframework.batch.item.NonTransientResourceException;
-import org.springframework.batch.item.ParseException;
-import org.springframework.batch.item.UnexpectedInputException;
+import com.fraud_remittance.customer_service.entity.AccountActivity;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
-import org.springframework.batch.item.file.mapping.RecordFieldSetMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
-
 @Configuration
-public class CustomerReader {
-
-
-    @Value("${batch.customer.file-path}")
+public class AccountActivityReader {
+    @Value("${batch.account-activity.file-path}")
     private Resource inputPath;
 
     @Bean
-    public FlatFileItemReader<Customer> customerItemReader() throws FileNotFoundException {
+    public FlatFileItemReader<AccountActivity> accountActivityItemReader() throws FileNotFoundException {
         System.out.println("PATH = " + inputPath);
-        FlatFileItemReader<Customer> reader = new FlatFileItemReader<>();
+        FlatFileItemReader<AccountActivity> reader = new FlatFileItemReader<>();
         reader.setResource(inputPath);
         reader.setLinesToSkip(1);
 
         DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
-
-        tokenizer.setNames("customerId", "name", "age", "address");
-        BeanWrapperFieldSetMapper<Customer> mapper =
+        tokenizer.setNames("customerId", "accountBalance", "lastLogin");
+        BeanWrapperFieldSetMapper<AccountActivity> mapper =
                 new BeanWrapperFieldSetMapper<>();
 
-        mapper.setTargetType(Customer.class);
+        mapper.setTargetType(AccountActivity.class);
 
-        DefaultLineMapper<Customer> lineMapper = new DefaultLineMapper<>();
+        DefaultLineMapper<AccountActivity> lineMapper = new DefaultLineMapper<>();
         lineMapper.setLineTokenizer(tokenizer);
         lineMapper.setFieldSetMapper(mapper);
 
