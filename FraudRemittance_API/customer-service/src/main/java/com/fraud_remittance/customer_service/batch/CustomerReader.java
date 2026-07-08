@@ -22,7 +22,8 @@ import java.io.FileNotFoundException;
 @Configuration
 public class CustomerReader {
 
-    @Value("input/record.csv")
+
+    @Value("${batch.customer.file-path}")
     private Resource inputPath;
 
     @Bean

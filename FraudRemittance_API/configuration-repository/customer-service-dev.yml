@@ -18,6 +18,12 @@ spring:
     jdbc:
       initialize-schema: always
 
+  management:
+    endpoints:
+      web:
+        exposure:
+          include: refresh
+
 eureka:
   instance:
     prefer-ip-address: false
@@ -33,3 +39,4 @@ server:
 batch:
   customer:
     file-path: /Users/akhil/Downloads/archive/Data/Customer Profiles/customer_data.csv
+
