@@ -28,4 +28,8 @@ eureka:
       defaultZone: http://localhost:8761/eureka
 
 server:
-  port: 8082
+  port: 8083
+
+batch:
+  customer:
+    file-path: /Users/akhil/Downloads/archive/Data/Customer Profiles/customer_data.csv
