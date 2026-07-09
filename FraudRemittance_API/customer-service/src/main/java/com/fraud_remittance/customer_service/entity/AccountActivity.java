@@ -3,7 +3,7 @@ package com.fraud_remittance.customer_service.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -22,6 +22,6 @@ public class AccountActivity {
 
     private Double accountBalance;
 
-    private LocalDateTime lastLogin;
+    private LocalDate lastLogin;
 
 }

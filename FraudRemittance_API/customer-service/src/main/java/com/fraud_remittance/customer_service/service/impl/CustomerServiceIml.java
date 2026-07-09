@@ -4,6 +4,7 @@ import com.fraud_remittance.customer_service.dto.CustomerMapper;
 import com.fraud_remittance.customer_service.entity.Customer;
 import com.fraud_remittance.customer_service.repository.CustomerRepostitory;
 import com.fraud_remittance.customer_service.service.CustomerService;
+import dto.customer.AccountActivityResponse;
 import dto.customer.CustomerResponse;
 import exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,6 @@ public class CustomerServiceIml implements CustomerService {
         return customers.map(
                 customerMapper::toCustomerResponse);
     }
-
 
     @Override
     public CustomerResponse getCustomerById(Long customerId) {

@@ -1,6 +1,8 @@
 package com.fraud_remittance.customer_service.controller;
 
+import com.fraud_remittance.customer_service.entity.AccountActivity;
 import com.fraud_remittance.customer_service.service.CustomerService;
+import dto.customer.AccountActivityResponse;
 import dto.customer.CustomerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

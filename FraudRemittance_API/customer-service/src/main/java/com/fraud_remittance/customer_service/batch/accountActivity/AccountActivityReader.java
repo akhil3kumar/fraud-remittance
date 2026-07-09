@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
+
 @Configuration
 public class AccountActivityReader {
     @Value("${batch.account-activity.file-path}")
@@ -25,14 +27,19 @@ public class AccountActivityReader {
 
         DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
         tokenizer.setNames("customerId", "accountBalance", "lastLogin");
-        BeanWrapperFieldSetMapper<AccountActivity> mapper =
-                new BeanWrapperFieldSetMapper<>();
-
-        mapper.setTargetType(AccountActivity.class);
 
         DefaultLineMapper<AccountActivity> lineMapper = new DefaultLineMapper<>();
         lineMapper.setLineTokenizer(tokenizer);
-        lineMapper.setFieldSetMapper(mapper);
+        lineMapper.setFieldSetMapper(fieldSet -> {
+                    AccountActivity activity = new AccountActivity();
+
+                    activity.setCustomerId(fieldSet.readLong("customerId"));
+                    activity.setAccountBalance(fieldSet.readDouble("accountBalance"));
+                    activity.setLastLogin(
+                            LocalDate.parse(fieldSet.readString("lastLogin"))
+                    );
+                    return activity;
+                });
 
         reader.setLineMapper(lineMapper);
 

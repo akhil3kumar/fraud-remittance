@@ -20,7 +20,4 @@ public class Customer {
 
     private String address;
 
-    @OneToOne(mappedBy = "customer")
-    private AccountActivity accountActivity;
-
 }
