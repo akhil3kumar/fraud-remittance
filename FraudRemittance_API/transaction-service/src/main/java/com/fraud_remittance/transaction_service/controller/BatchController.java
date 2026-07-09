@@ -12,13 +12,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/transactions/batch")
-@RequiredArgsConstructor
 public class BatchController {
 
     private final JobLauncher jobLauncher;
 
-    @Qualifier("transactionImportJob")
     private final Job transactionImportJob;
+
+    private final Job transactionMetadataJob;
+
+    public  BatchController(JobLauncher jobLauncher,
+                            @Qualifier("transactionImportJob") Job transactionImportJob,
+                            @Qualifier("transactionMetadataJob") Job transactionMetadataJob){
+
+        this.jobLauncher = jobLauncher;
+        this.transactionImportJob = transactionImportJob;
+        this.transactionMetadataJob = transactionMetadataJob;
+
+    }
+
+
 
     @PostMapping("/transactions")
     public String importTransactions() throws Exception {
@@ -33,5 +45,35 @@ public class BatchController {
         jobLauncher.run(transactionImportJob, params);
 
         return "Transaction import started";
+    }
+
+    @PostMapping("/transaction-metadata")
+    public String importTransactionMetaData() throws Exception {
+
+        JobParameters params =
+                new JobParametersBuilder()
+                        .addLong("time", System.currentTimeMillis())
+                        .toJobParameters();
+
+        jobLauncher.run(transactionMetadataJob, params);
+
+        return "TransactionMetaData import started";
+    }
+
+    @PostMapping("/all")
+    public String importAll() throws Exception {
+        JobParameters transactionParams = new JobParametersBuilder()
+                .addLong("time", System.currentTimeMillis())
+                .toJobParameters();
+
+        jobLauncher.run(transactionImportJob, transactionParams);
+
+        JobParameters transactionMetaDataParams = new JobParametersBuilder()
+                .addLong("time", System.nanoTime())
+                .toJobParameters();
+
+        jobLauncher.run(transactionMetadataJob, transactionMetaDataParams);
+
+        return "All batch jobs started";
     }
 }

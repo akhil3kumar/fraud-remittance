@@ -1,31 +1,32 @@
-package com.fraud_remittance.transaction_service.batch;
+package com.fraud_remittance.transaction_service.batch.transactionMetadata;
 
 import com.fraud_remittance.transaction_service.entity.Transaction;
+import com.fraud_remittance.transaction_service.entity.TransactionMetadata;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
-@Component
-@RequiredArgsConstructor
-public class TransactionWriter {
 
+@Configuration
+@RequiredArgsConstructor
+public class TransactionMetaDataWriter {
     private final DataSource dataSource;
 
     @Bean
-    public JdbcBatchItemWriter<Transaction> transactionItemWriter() {
-        JdbcBatchItemWriter<Transaction> writer =
+    public JdbcBatchItemWriter<TransactionMetadata> transactionMetadataItemWriter() {
+        JdbcBatchItemWriter<TransactionMetadata> writer =
                 new JdbcBatchItemWriter<>();
 
         writer.setDataSource(dataSource);
 
         writer.setSql("""
-                INSERT INTO transactions
-                (transaction_id, customer_id, amount)
+                INSERT INTO transaction_metadata
+                (transaction_id, transaction_time, merchant_id)
                 VALUES
-                (:transactionId, :customerId, :amount)
+                (:transactionId, :timestamp, :merchantId)
                 ON CONFLICT (transaction_id)
                 DO NOTHING
                 """);

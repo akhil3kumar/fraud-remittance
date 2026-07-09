@@ -1,4 +1,4 @@
-package com.fraud_remittance.transaction_service.batch;
+package com.fraud_remittance.transaction_service.batch.transaction;
 
 import com.fraud_remittance.transaction_service.entity.Transaction;
 import org.springframework.batch.item.ItemProcessor;

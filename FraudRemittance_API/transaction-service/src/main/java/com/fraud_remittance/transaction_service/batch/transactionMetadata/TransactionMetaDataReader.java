@@ -1,7 +1,7 @@
-package com.fraud_remittance.transaction_service.batch;
+package com.fraud_remittance.transaction_service.batch.transactionMetadata;
 
 import com.fraud_remittance.transaction_service.entity.Transaction;
-import dto.transaction.TransactionResponse;
+import com.fraud_remittance.transaction_service.entity.TransactionMetadata;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
@@ -12,28 +12,27 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 
 import java.io.FileNotFoundException;
-
 @Configuration
-public class TransactionReader {
-    @Value("${batch.transaction.file-path}")
+public class TransactionMetaDataReader {
+    @Value("${batch.transactionMetadata.file-path}")
     private Resource inputPath;
 
     @Bean
-    public FlatFileItemReader<Transaction> transactionItemReader() throws FileNotFoundException {
+    public FlatFileItemReader<TransactionMetadata> transactionMetadataItemReader() throws FileNotFoundException {
         System.out.println("PATH = " + inputPath);
-        FlatFileItemReader<Transaction> reader = new FlatFileItemReader<>();
+        FlatFileItemReader<TransactionMetadata> reader = new FlatFileItemReader<>();
         reader.setResource(inputPath);
         reader.setLinesToSkip(1);
 
         DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
 
-        tokenizer.setNames("transactionId", "amount", "customerId");
-        BeanWrapperFieldSetMapper<Transaction> mapper =
+        tokenizer.setNames("transactionId", "timestamp", "amount");
+        BeanWrapperFieldSetMapper<TransactionMetadata> mapper =
                 new BeanWrapperFieldSetMapper<>();
 
-        mapper.setTargetType(Transaction.class);
+        mapper.setTargetType(TransactionMetadata.class);
 
-        DefaultLineMapper<Transaction> lineMapper = new DefaultLineMapper<>();
+        DefaultLineMapper<TransactionMetadata> lineMapper = new DefaultLineMapper<>();
         lineMapper.setLineTokenizer(tokenizer);
         lineMapper.setFieldSetMapper(mapper);
 
@@ -41,5 +40,4 @@ public class TransactionReader {
 
         return reader;
     }
-
 }

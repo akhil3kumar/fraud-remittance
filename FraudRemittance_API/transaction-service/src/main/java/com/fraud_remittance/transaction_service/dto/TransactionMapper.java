@@ -1,13 +1,9 @@
 package com.fraud_remittance.transaction_service.dto;
 
 import com.fraud_remittance.transaction_service.entity.Transaction;
-import com.fraud_remittance.transaction_service.entity.TransactionStatus;
 import dto.transaction.TransactionRequest;
 import dto.transaction.TransactionResponse;
 import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Component
 public class TransactionMapper {
