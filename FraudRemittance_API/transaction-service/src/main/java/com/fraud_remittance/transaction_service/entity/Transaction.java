@@ -21,20 +21,5 @@ public class Transaction {
 
     private Long customerId;
 
-    private String beneficiaryName;
-
-    private String beneficiaryAccount;
-
-    private String destinationCountry;
-
     private BigDecimal amount;
-
-    private String currency;
-
-    @Enumerated(EnumType.STRING)
-    private TransactionStatus status;
-
-    private Integer riskScore;
-
-    private LocalDateTime createdAt;
 }

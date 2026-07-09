@@ -1,9 +1,10 @@
 package com.fraud_remittance.transaction_service.controller;
 
 import com.fraud_remittance.transaction_service.service.TransactionService;
-import dto.transaction.TransactionRequest;
 import dto.transaction.TransactionResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,31 +17,23 @@ public class TransactionController {
 
     private final TransactionService transactionService;
 
-    @PostMapping
-    public ResponseEntity<TransactionResponse>
-    createTransaction(
-            @RequestBody TransactionRequest request) {
-
-        return ResponseEntity.ok(
-                transactionService.createTransaction(request)
-        );
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<TransactionResponse>
-    getTransaction(@PathVariable Long id) {
-
-        return ResponseEntity.ok(
-                transactionService.getTransaction(id)
-        );
-    }
-
     @GetMapping
-    public ResponseEntity<List<TransactionResponse>>
-    getAllTransactions() {
+    public ResponseEntity<Page<TransactionResponse>> getTransactions(Pageable pageable) {
 
         return ResponseEntity.ok(
-                transactionService.getAllTransactions()
+                transactionService.getTransactions(pageable)
+        );
+    }
+
+    @GetMapping("/customer/{customerId}")
+    public ResponseEntity<Page<TransactionResponse>> getTransactionsByCustomer(
+            @PathVariable Long customerId, Pageable pageable) {
+
+        return ResponseEntity.ok(
+                transactionService.getTransactionsByCustomer(
+                        customerId,
+                        pageable
+                )
         );
     }
 }

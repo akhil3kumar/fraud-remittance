@@ -7,6 +7,8 @@ import com.fraud_remittance.transaction_service.service.TransactionService;
 import dto.transaction.TransactionRequest;
 import dto.transaction.TransactionResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,28 +21,15 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
 
     private final TransactionMapper transactionMapper;
+
     @Override
-    public TransactionResponse createTransaction(TransactionRequest request) {
-        Transaction transaction = transactionMapper.getTransactionEntity(request);
-
-        Transaction savedTransaction =transactionRepository.save(transaction);
-
-        return transactionMapper.toTransactionResponse(savedTransaction);
-
-    }
-
-    private void validateTransactionRequest(TransactionRequest request) {
-
-
+    public Page<TransactionResponse> getTransactions(Pageable pageable) {
+        return transactionRepository.findAll(pageable)
+                .map(transactionMapper::toTransactionResponse);
     }
 
     @Override
-    public TransactionResponse getTransaction(Long transactionId) {
-        return null;
-    }
-
-    @Override
-    public List<TransactionResponse> getAllTransactions() {
-        return List.of();
+    public Page<TransactionResponse> getTransactionsByCustomer(Long customerId, Pageable pageable) {
+        return transactionRepository.findByCustomerId(customerId);
     }
 }

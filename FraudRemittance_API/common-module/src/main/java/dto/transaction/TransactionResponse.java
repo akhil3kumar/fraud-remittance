@@ -8,11 +8,6 @@ import java.math.BigDecimal;
 public record TransactionResponse (
         Long transactionId,
         Long customerId,
-        BigDecimal amount,
-        String destinationCountry,
-        String status,
-        Integer riskScore
+        BigDecimal amount
 ){
-
-
 }

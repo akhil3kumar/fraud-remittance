@@ -28,7 +28,7 @@ public class AccountActivityController {
     }
 
     @GetMapping("/customer/{id}/account-activity")
-    public ResponseEntity<CustomerResponse> getAccountActivityByCustomerId(@PathVariable(name = "id") Long customerId){
+    public ResponseEntity<AccountActivityResponse> getAccountActivityByCustomerId(@PathVariable(name = "id") Long customerId){
         return ResponseEntity.status(HttpStatus.OK).body(accountActivityService.getAccountActivityByCustomerId(customerId));
     }
 

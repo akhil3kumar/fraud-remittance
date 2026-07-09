@@ -17,14 +17,7 @@ public class TransactionMapper {
     public Transaction getTransactionEntity(TransactionRequest request) {
         return Transaction.builder()
                 .customerId(request.customerId())
-                .beneficiaryName(request.beneficiaryName())
-                .beneficiaryAccount(request.beneficiaryAccount())
-                .destinationCountry(request.destinationCountry())
                 .amount(request.amount())
-                .currency(request.currency())
-                .status(TransactionStatus.PENDING_REVIEW)
-                .riskScore(0)
-                .createdAt(LocalDateTime.now())
                 .build();
     }
 
@@ -33,9 +26,6 @@ public class TransactionMapper {
                 .transactionId(transaction.getTransactionId())
                 .customerId(transaction.getCustomerId())
                 .amount(transaction.getAmount())
-                .destinationCountry(transaction.getDestinationCountry())
-                .status(transaction.getStatus().toString())
-                .riskScore(transaction.getRiskScore())
                 .build();
     }
 }

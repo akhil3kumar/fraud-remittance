@@ -1,6 +1,11 @@
 spring:
   application:
     name: transaction-service
+  batch:
+    jdbc:
+      initialize-schema: always
+    job:
+      enabled: false
 
   datasource:
     url: jdbc:postgresql://localhost:5432/fraud_remittance
@@ -24,4 +29,8 @@ eureka:
       defaultZone: http://localhost:8761/eureka
 
 server:
-  port: 8082
+  port: 8083
+
+batch:
+  customer:
+    file-path: file:/Users/akhil/Downloads/archive/Data/Transaction Data/transaction_records.csv
