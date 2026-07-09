@@ -32,5 +32,5 @@ server:
   port: 8083
 
 batch:
-  customer:
+  transaction:
     file-path: file:/Users/akhil/Downloads/archive/Data/Transaction Data/transaction_records.csv
