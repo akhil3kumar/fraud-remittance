@@ -36,10 +36,10 @@ public class TransactionMetaDataBatchConfig {
     }
 
     @Bean
-    public Job transactionImportJob() {
+    public Job transactionMetadataImportJob() {
 
         return new JobBuilder(
-                "transactionImportJob",
+                "transactionMetadataImportJob",
                 jobRepository)
                 .start(transactionMetadataStep())
                 .build();

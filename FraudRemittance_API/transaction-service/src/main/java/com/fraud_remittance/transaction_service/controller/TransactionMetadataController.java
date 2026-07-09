@@ -21,7 +21,7 @@ public class TransactionMetadataController {
 
     private final TransactionMetadataService transactionMetadataService;
 
-    @GetMapping
+    @GetMapping("/transaction-metadata")
     public ResponseEntity<Page<TransactionMetadataResponse>> getTransactions(Pageable pageable) {
 
         return ResponseEntity.ok(

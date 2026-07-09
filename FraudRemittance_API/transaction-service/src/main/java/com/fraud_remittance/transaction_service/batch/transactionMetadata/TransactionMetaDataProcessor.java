@@ -3,9 +3,10 @@ package com.fraud_remittance.transaction_service.batch.transactionMetadata;
 import com.fraud_remittance.transaction_service.entity.TransactionMetadata;
 import com.fraud_remittance.transaction_service.repository.TransactionMetadataRepository;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-
+@Component
 public class TransactionMetaDataProcessor implements ItemProcessor<TransactionMetadata,TransactionMetadata> {
 
     @Override

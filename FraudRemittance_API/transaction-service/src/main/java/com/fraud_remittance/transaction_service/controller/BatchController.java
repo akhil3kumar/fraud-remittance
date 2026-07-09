@@ -22,11 +22,11 @@ public class BatchController {
 
     public  BatchController(JobLauncher jobLauncher,
                             @Qualifier("transactionImportJob") Job transactionImportJob,
-                            @Qualifier("transactionMetadataJob") Job transactionMetadataJob){
+                            @Qualifier("transactionMetadataImportJob") Job transactionMetadataImportJob){
 
         this.jobLauncher = jobLauncher;
         this.transactionImportJob = transactionImportJob;
-        this.transactionMetadataJob = transactionMetadataJob;
+        this.transactionMetadataJob = transactionMetadataImportJob;
 
     }
 
